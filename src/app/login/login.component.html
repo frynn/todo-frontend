@@ -1,0 +1,14 @@
+<form [formGroup]="loginForm" class="flex-container" (ngSubmit)="signIn()">
+  <h1>Login</h1>
+  <mat-form-field>
+    <mat-label>Email</mat-label>
+    <input matInput formControlName="email">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Password</mat-label>
+    <input matInput type="password" formControlName="password">
+  </mat-form-field>
+  <button type="submit" mat-button [disabled]="!loginForm.valid">Submit</button>
+</form>
+
+<!--[formGroup]="loginForm" (ngSubmit)="submitLogin()"-->
