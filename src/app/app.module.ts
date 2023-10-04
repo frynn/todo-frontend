@@ -10,13 +10,16 @@ import {MatIconModule} from "@angular/material/icon";
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import {MatButtonModule} from "@angular/material/button";
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
+import { TodoComponent } from './todo/todo.component';
+import {AuthInterceptor} from "./shared/interceptors/auth-interceptor";
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     RegisterComponent,
+    TodoComponent,
   ],
   imports: [
     BrowserModule,
@@ -29,7 +32,13 @@ import {HttpClientModule} from "@angular/common/http";
     MatButtonModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true,
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

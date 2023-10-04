@@ -10,24 +10,26 @@ import {Router} from "@angular/router";
 })
 export class RegisterComponent implements OnInit {
   regForm = this.fb.nonNullable.group({
-    firstName: this.fb.nonNullable.control<string>("",{validators: Validators.required}),
-    email: this.fb.nonNullable.control<string>("",{validators:[Validators.required, Validators.email]}),
+    firstName: this.fb.nonNullable.control<string>("", {validators: Validators.required}),
+    email: this.fb.nonNullable.control<string>("", {validators: [Validators.required, Validators.email]}),
     password: this.fb.nonNullable.control<string>("", {validators: Validators.required}),
   });
 
   constructor(
     private readonly fb: FormBuilder,
     private readonly authService: AuthService,
-    private router: Router) {
+    private router: Router
+  ) {
   }
 
-  signUp(){
+  signUp() {
     const payload = this.regForm.getRawValue();
     this.authService.signUp(payload).subscribe({
-      next: () => this.router.navigateByUrl('/'),
+      next: () => this.router.navigateByUrl('/home'),
       error: err => console.log(err)
     })
   }
+
   ngOnInit(): void {
   }
 

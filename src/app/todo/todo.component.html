@@ -1,0 +1,27 @@
+<form [formGroup]="todoForm" (ngSubmit)="addTodo()" class="flex-container">
+  <h1>What would u like to do?</h1>
+  <input matInput formControlName="title" placeholder="Title">
+  <input matInput formControlName="description" placeholder="Description">
+  <button type="submit" mat-button>Add task</button>
+</form>
+<div class="flex-container">
+  <h1>Your tasks</h1>
+  <div class="todo-task" *ngFor="let todo of todos">
+    <div class="todo-header">
+      <h3>Title: {{todo.title}}</h3>
+      <span>
+        <button class="small-btns" mat-icon-button matTooltip="Primary" (click)="deleteTodo(todo.id)">
+          <mat-icon>delete</mat-icon>
+        </button>
+        <button class="small-btns" mat-icon-button matTooltip="Primary">
+          <mat-icon>edit</mat-icon>
+        </button>
+      </span>
+    </div>
+
+    <p>Description: {{todo.description}}</p>
+
+  </div>
+</div>
+
+

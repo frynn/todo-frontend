@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit {
   signIn(){
     const payload = this.loginForm.getRawValue()
     this.authService.signIn(payload).subscribe({
-      next: () => this.router.navigateByUrl('/'),
+      next: () => this.router.navigateByUrl('/home'),
       error: (err) => console.error(err),
     });
   }
