@@ -13,6 +13,7 @@ import {MatButtonModule} from "@angular/material/button";
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import { TodoComponent } from './todo/todo.component';
 import {AuthInterceptor} from "./shared/interceptors/auth-interceptor";
+import { WrapperComponent } from './wrapper/wrapper.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import {AuthInterceptor} from "./shared/interceptors/auth-interceptor";
     LoginComponent,
     RegisterComponent,
     TodoComponent,
+    WrapperComponent,
   ],
   imports: [
     BrowserModule,

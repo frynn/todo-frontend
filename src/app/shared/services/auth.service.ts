@@ -47,4 +47,18 @@ export class AuthService {
     this.access_token = token;
     localStorage.setItem(ACCESS_TOKEN_KEY, this.access_token)
   }
+
+  isLoggedIn(): boolean{
+    return !!this.access_token;
+  }
+
+  logout(){
+    this.access_token = '';
+    this.profile = null;
+    localStorage.removeItem(ACCESS_TOKEN_KEY);
+  }
+
+  getProfile(): Observable<IUser | null> {
+    return this.http.get<IUser>('http://localhost:3000/profile')
+  }
 }

@@ -1,26 +1,40 @@
 <form [formGroup]="todoForm" (ngSubmit)="addTodo()" class="flex-container">
   <h1>What would u like to do?</h1>
-  <input matInput formControlName="title" placeholder="Title">
-  <input matInput formControlName="description" placeholder="Description">
-  <button type="submit" mat-button>Add task</button>
+  <mat-form-field>
+    <input matInput formControlName="title" placeholder="Title">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput formControlName="description" placeholder="Description">
+  </mat-form-field>
+  <button type="submit" mat-raised-button color="primary">Add task</button>
 </form>
 <div class="flex-container">
   <h1>Your tasks</h1>
   <div class="todo-task" *ngFor="let todo of todos">
-    <div class="todo-header">
-      <h3>Title: {{todo.title}}</h3>
-      <span>
+    <div *ngIf="editing !== todo.id; else editingRef">
+      <div class="todo-header">
+        <h3>Title: {{todo.title}}</h3>
+      </div>
+      <p>Description: {{todo.description}}</p>
+      <input type="checkbox">
+    </div>
+    <ng-template #editingRef>
+      <form [formGroup]="editForm" (ngSubmit)="editTodo(todo.id)">
+        <h3>Title: <input matInput placeholder="Todo title #1..." formControlName="title"></h3>
+        <p>Description: <input matInput placeholder="This's description..." formControlName="description"></p>
+        <input type="checkbox">
+        <button type="submit" mat-raised-button color="primary" >Submit changes</button>
+        <button type="button" (click)="editing = null">Cancel</button>
+      </form>
+    </ng-template>
+    <span>
         <button class="small-btns" mat-icon-button matTooltip="Primary" (click)="deleteTodo(todo.id)">
           <mat-icon>delete</mat-icon>
         </button>
-        <button class="small-btns" mat-icon-button matTooltip="Primary">
+        <button class="small-btns" mat-icon-button matTooltip="Primary" (click)="editing = todo.id">
           <mat-icon>edit</mat-icon>
         </button>
       </span>
-    </div>
-
-    <p>Description: {{todo.description}}</p>
-
   </div>
 </div>
 

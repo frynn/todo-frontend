@@ -22,4 +22,8 @@ export class TodoService {
     return this.http.delete<number>(`http://localhost:3000/todo/${id}`)
   }
 
+  editTodo(payload: Partial<ITodo>, id: number): Observable<ITodo>{
+    return this.http.patch<ITodo>(`http://localhost:3000/todo/${id}`, payload);
+  }
+
 }
