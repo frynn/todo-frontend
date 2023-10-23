@@ -23,4 +23,8 @@ export class WrapperComponent implements OnInit{
     })
   }
 
+  logOut(){
+    this.authService.logout();
+  }
+
 }

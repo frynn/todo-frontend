@@ -1,7 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, Validators} from "@angular/forms";
 import {TodoService} from "../shared/services/todo.service";
 import {ITodo} from "../shared/interfaces/todo.interface";
+import {debounce, debounceTime, Subject, switchMap, take} from "rxjs";
 
 @Component({
   selector: 'app-todo',
@@ -16,27 +17,29 @@ export class TodoComponent implements OnInit {
   });
 
   editForm = this.fb.nonNullable.group({
-    title: this.fb.nonNullable.control<string>("", {validators: Validators.required}),
-    description: this.fb.nonNullable.control<string>("", {validators: Validators.required}),
+      title: this.fb.nonNullable.control<string>("", {validators: Validators.required}),
+      description: this.fb.nonNullable.control<string>("", {validators: Validators.required}),
     }
   )
   todos: ITodo[] | null = [];
   editing: number | null = null
 
-  constructor(private readonly fb: FormBuilder, private readonly todoService: TodoService,) {}
+  constructor(private readonly fb: FormBuilder, private readonly todoService: TodoService,) {
+  }
 
-  ngOnInit(): void{
+  ngOnInit(): void {
     this.getAllTodos();
   }
 
-  getAllTodos(){this.todoService.getAllTodos().subscribe(
-        {
-          next: (value) => (this.todos = value),
-          error: (err) => console.error(err)
-        });
+  getAllTodos() {
+    this.todoService.getAllTodos().subscribe(
+      {
+        next: (value) => (this.todos = value),
+        error: (err) => console.error(err)
+      });
   }
 
-  addTodo(){
+  addTodo() {
     const payload = this.todoForm.getRawValue();
 
     this.todoService.createTodo(payload).subscribe({
@@ -45,20 +48,32 @@ export class TodoComponent implements OnInit {
     });
   }
 
-  deleteTodo(id: number){
-      this.todoService.deleteTodo(id).subscribe({
-        next: () => this.getAllTodos(),
-        error: (err) => console.error(err),
-      });
-  }
-
-  editTodo(id: number){
-    const payload = this.editForm.getRawValue();
-    this.todoService.editTodo(payload, id).subscribe({
+  deleteTodo(id: number) {
+    this.todoService.deleteTodo(id).subscribe({
       next: () => this.getAllTodos(),
       error: (err) => console.error(err),
+    });
+  }
+
+  editTodo(id: number) {
+    const payload = this.editForm.getRawValue();
+    this.todoService.editTodo(payload, id).subscribe({
+        next: () => this.getAllTodos(),
+        error: (err) => console.error(err),
       }
     )
     this.editing = null;
+  }
+
+  todoValues(todo: ITodo) {
+    this.editing = todo.id;
+    this.editForm.patchValue({title: todo.title, description: todo.description})
+  }
+
+  triggerTodo(todo: ITodo) {
+    todo.completed = !todo.completed;
+    this.todoService.editTodo({completed: todo.completed}, todo.id).subscribe((todoRes) => {
+      todo = todoRes;
+    });
   }
 }

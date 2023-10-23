@@ -13,28 +13,27 @@
   <div class="todo-task" *ngFor="let todo of todos">
     <div *ngIf="editing !== todo.id; else editingRef">
       <div class="todo-header">
-        <h3>Title: {{todo.title}}</h3>
+        <h3 [ngStyle]="{ 'text-decoration': todo.completed ? 'line-through' : 'none' }">{{todo.title}}</h3>
+        <span>
+          <button class="small-btns" mat-icon-button matTooltip="Delete TODO" (click)="deleteTodo(todo.id)">
+            <mat-icon>delete</mat-icon>
+          </button>
+          <button class="small-btns" mat-icon-button matTooltip="Edit TODO" (click)="todoValues(todo)">
+            <mat-icon>edit</mat-icon>
+          </button>
+        </span>
       </div>
-      <p>Description: {{todo.description}}</p>
-      <input type="checkbox">
+      <p>{{todo.description}}</p>
+      <input type="checkbox" (click)="triggerTodo(todo)" [checked]="todo.completed">
     </div>
     <ng-template #editingRef>
       <form [formGroup]="editForm" (ngSubmit)="editTodo(todo.id)">
-        <h3>Title: <input matInput placeholder="Todo title #1..." formControlName="title"></h3>
-        <p>Description: <input matInput placeholder="This's description..." formControlName="description"></p>
-        <input type="checkbox">
+        <h3>Title: <input matInput formControlName="title"></h3>
+        <p>Description: <input matInput formControlName="description"></p>
         <button type="submit" mat-raised-button color="primary" >Submit changes</button>
-        <button type="button" (click)="editing = null">Cancel</button>
+        <button type="button" mat-raised-button (click)="editing = null">Cancel</button>
       </form>
     </ng-template>
-    <span>
-        <button class="small-btns" mat-icon-button matTooltip="Primary" (click)="deleteTodo(todo.id)">
-          <mat-icon>delete</mat-icon>
-        </button>
-        <button class="small-btns" mat-icon-button matTooltip="Primary" (click)="editing = todo.id">
-          <mat-icon>edit</mat-icon>
-        </button>
-      </span>
   </div>
 </div>
 

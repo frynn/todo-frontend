@@ -11,7 +11,7 @@ const routes: Routes = [
   {
     path: '',
     component: WrapperComponent,
-    // canActivate: [authGuard],
+    canActivate: [authGuard],
     children: [
       {
         path: 'home',
@@ -22,7 +22,7 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
-    // canActivate: [notAuthGuard],
+    canActivate: [notAuthGuard],
   },
   {
     path: 'register',

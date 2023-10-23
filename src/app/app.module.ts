@@ -14,6 +14,7 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import { TodoComponent } from './todo/todo.component';
 import {AuthInterceptor} from "./shared/interceptors/auth-interceptor";
 import { WrapperComponent } from './wrapper/wrapper.component';
+import {MatTooltipModule} from "@angular/material/tooltip";
 
 @NgModule({
   declarations: [
@@ -23,17 +24,18 @@ import { WrapperComponent } from './wrapper/wrapper.component';
     TodoComponent,
     WrapperComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    MatToolbarModule,
-    ReactiveFormsModule,
-    MatInputModule,
-    MatIconModule,
-    MatButtonModule,
-    HttpClientModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        BrowserAnimationsModule,
+        MatToolbarModule,
+        ReactiveFormsModule,
+        MatInputModule,
+        MatIconModule,
+        MatButtonModule,
+        HttpClientModule,
+        MatTooltipModule
+    ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,

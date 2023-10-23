@@ -1,9 +1,8 @@
-<header style="display: flex">
-  <div>
-    <p> Welcome, Dear!</p>
-  </div>
+<header>
   <div >
-    <a mat-button routerLink="/login">Sign In</a>
+    <a mat-button routerLink="/login" *ngIf="!profile">Sign In</a>
   </div>
+  <a mat-button routerLink="/login" *ngIf="profile" (click)="logOut()">Log out</a>
+  <h1> Welcome, Dear {{profile?.firstName}}!</h1>
 </header>
 <router-outlet></router-outlet>
