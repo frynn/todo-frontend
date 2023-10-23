@@ -1,37 +1,43 @@
-<form [formGroup]="todoForm" (ngSubmit)="addTodo()" class="flex-container">
-  <h1>What would u like to do?</h1>
-  <mat-form-field>
-    <input matInput formControlName="title" placeholder="Title">
-  </mat-form-field>
-  <mat-form-field>
-    <input matInput formControlName="description" placeholder="Description">
-  </mat-form-field>
-  <button type="submit" mat-raised-button color="primary">Add task</button>
+<form [formGroup]="todoForm" (ngSubmit)="addTodo()" class="flex flex-col justify-center items-center">
+  <h1 class="text-6xl font-mono text-sky-100 text-center">What would u like to do?</h1>
+  <input class="my-3 input w-full max-w-lg" formControlName="title" placeholder="Title">
+  <input class="my-3 input w-full max-w-lg" formControlName="description" placeholder="Description">
+  <button type="submit" class="my-3 btn btn-active btn-accent btn-wide">Add task</button>
 </form>
-<div class="flex-container">
-  <h1>Your tasks</h1>
-  <div class="todo-task" *ngFor="let todo of todos">
+<div class="flex flex-col justify-center items-center h-auto">
+  <h1 class="text-6xl font-mono text-sky-100 text-center">Your tasks</h1>
+  <div class="card w-96 p-4" *ngFor="let todo of todos">
     <div *ngIf="editing !== todo.id; else editingRef">
       <div class="todo-header">
         <h3 [ngStyle]="{ 'text-decoration': todo.completed ? 'line-through' : 'none' }">{{todo.title}}</h3>
         <span>
-          <button class="small-btns" mat-icon-button matTooltip="Delete TODO" (click)="deleteTodo(todo.id)">
-            <mat-icon>delete</mat-icon>
-          </button>
-          <button class="small-btns" mat-icon-button matTooltip="Edit TODO" (click)="todoValues(todo)">
-            <mat-icon>edit</mat-icon>
-          </button>
+          <div class="lg:tooltip" data-tip="Delete TODO">
+            <button  (click)="deleteTodo(todo.id)">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+              </svg>
+            </button>
+          </div>
+          <div class="lg:tooltip" data-tip="Edit TODO">
+            <button  (click)="todoValues(todo)">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" />
+              </svg>
+            </button>
+          </div>
         </span>
       </div>
       <p>{{todo.description}}</p>
-      <input type="checkbox" (click)="triggerTodo(todo)" [checked]="todo.completed">
+      <input type="checkbox" class="checkbox checkbox-accent" (click)="triggerTodo(todo)" [checked]="todo.completed">
     </div>
     <ng-template #editingRef>
-      <form [formGroup]="editForm" (ngSubmit)="editTodo(todo.id)">
-        <h3>Title: <input matInput formControlName="title"></h3>
-        <p>Description: <input matInput formControlName="description"></p>
-        <button type="submit" mat-raised-button color="primary" >Submit changes</button>
-        <button type="button" mat-raised-button (click)="editing = null">Cancel</button>
+      <form [formGroup]="editForm" (ngSubmit)="editTodo(todo.id)" class="flex flex-col ">
+        <input class="my-3 input w-full max-w-lg" formControlName="title">
+        <input class="my-3 input w-full max-w-lg" formControlName="description">
+        <div class="flex justify-center items-center gap-2">
+          <button type="submit" class="btn btn-accent btn-sm">Submit changes</button>
+          <button type="button" class="btn btn-error btn-xs" (click)="editing = null">Cancel</button>
+        </div>
       </form>
     </ng-template>
   </div>

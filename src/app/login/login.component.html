@@ -1,14 +1,11 @@
-<form [formGroup]="loginForm" class="flex-container" (ngSubmit)="signIn()">
-  <h1>Login</h1>
-  <mat-form-field>
-    <mat-label>Email</mat-label>
-    <input matInput formControlName="email">
-  </mat-form-field>
-  <mat-form-field>
-    <mat-label>Password</mat-label>
-    <input matInput type="password" formControlName="password">
-  </mat-form-field>
-  <button type="submit" mat-button [disabled]="!loginForm.valid">Submit</button>
-</form>
+<form [formGroup]="loginForm" class="flex flex-col justify-center items-center h-screen" (ngSubmit)="signIn()">
+    <h1 class="text-6xl font-mono text-sky-100 text-center">Login</h1>
+    <input placeholder="Login" class="my-3 input w-full max-w-xs" formControlName="email">
+    <input placeholder="Password" class="my-3 input w-full max-w-xs" type="password" formControlName="password">
+    <button type="submit" class="my-3 btn btn-active btn-accent btn-wide" [disabled]="!loginForm.valid">Log in</button>
+    <p class="my-5">Don't have an account? <a routerLink="/register" class="text-sky-500">Create one!</a></p>
+  </form>
 
-<!--[formGroup]="loginForm" (ngSubmit)="submitLogin()"-->
+<!--TODO: visual validation for inputs-->
+
+
